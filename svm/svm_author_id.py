@@ -26,8 +26,9 @@ features_train, features_test, labels_train, labels_test = preprocess()
 ### your code goes here ###
 
 # decrease train data,increase train speed
-# features_train = features_train[:len(features_train)/100]
-# labels_train = labels_train[:len(labels_train)/100]
+
+features_train = features_train[:len(features_train)/100]
+labels_train = labels_train[:len(labels_train)/100]
 
 from sklearn.svm import SVC
 #clf = SVC(kernel="linear")
@@ -38,11 +39,20 @@ clf.fit(features_train, labels_train)
 print "training time:", round(time()-t0, 3), "s"
 
 t0 = time()
-pred = clf.predict(features_test)
+predicted = clf.predict(features_test)
 print "predict time:", round(time()-t0, 3), "s"
 
+# print("element 10 predict:%s" %("Sara" if(pred[10]==0) else "Chris"))
+# print("element 26 predict:%s" %("Sara" if(pred[26]==0) else "Chris"))
+# print("element 50 predict:%s" %("Sara" if(pred[50]==0) else "Chris"))
+
+new_list = [i for i in predicted if i > 0]
+print ("Chris:%d" %(len(new_list)))
+print ("Sara:%d" %(len(predicted)-len(new_list)))
+# predicted.
+
 from sklearn.metrics import accuracy_score
-accuracy = accuracy_score(labels_test,pred)
+accuracy = accuracy_score(labels_test,predicted)
 print accuracy
 #########################################################
 
